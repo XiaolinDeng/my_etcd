@@ -14,8 +14,11 @@ impl Storage {
             data: BTreeMap::new()
         }
     }
-    pub fn set(&mut self, key: &str, value: &str) {
+    /// set an value,return an old value.
+    pub fn set(&mut self, key: &str, value: &str) -> Option<String> {
+        let old_val = self.data.get(key).cloned();
         self.data.insert(key.parse().unwrap(), value.parse().unwrap());
+        old_val
     }
     pub fn get(&self, key: &str) -> &str {
         match self.data.get(key) {
@@ -46,8 +49,8 @@ impl Storage {
 
         let obj = json::parse(content_str.as_str()).unwrap();
         let ent = obj.entries();
-        for (k,v) in ent {
-            self.data.insert(k.to_string(),v.as_str().unwrap().to_string()).unwrap();
+        for (k, v) in ent {
+            self.data.insert(k.to_string(), v.as_str().unwrap().to_string()).unwrap();
         }
     }
     pub fn remove(&self) {}
