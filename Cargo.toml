@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 json = "0.12.4"
+tokio = { version = "1.21.2",features = ["full"] }
